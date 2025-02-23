@@ -7,11 +7,27 @@
     </ul>
 </div>
 
-### Installation
+## Installation
 On terminal:
 ```shell
 npm install inquirer
 ```
+
+## answers object
+- The answers object contains the information regarding the user input.
+```javascript
+inquirer
+    .prompt([
+        {
+            message: "Message for question1",
+            name: "question1
+        }
+    ]) 
+```
+```javascript
+answers.<question name>
+```
+Any value that the user input for the first question (question1) is accessed through `answers.question1`. 
 
 ### Sample Implementation:
 ```javascript

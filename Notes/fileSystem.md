@@ -1,23 +1,19 @@
 # File System Native Node Module
 - The File System module is a native module that is already built in Node.js.
----
-
 ## Setup:
 ```javascript
 import fs from 'fs';
 ```
 
 ## Methods:
-
--------------------------------------------------------
-#### .readFile() Method
-`fs.readFile( filePath, encoding, callback)` : method used for reading files on local computer.
+### .readFile( filePath, encoding, callback ) Method
+method used for reading files on local computer.
 
 - `filePath` - the path of the file. Can be relative or absolute path.
 - `encoding` - set to "utf8" by default.
 - `callback` - Callback function in case an error occurs.
 
-```jsregexp
+```javascript
 var http = require('http');
 var fs = require('fs');
 http.createServer(function (req, res) {
@@ -29,22 +25,43 @@ http.createServer(function (req, res) {
 }).listen(8080);
 ```
 -------------------------------------------------
-#### .writeFile( path, callback )
+### .writeFile( path, content, callback )
 ```javascript
 fs.writeFile("URL.txt", url, (err) => {
       if (err) throw err;
       console.log("The file has been saved!");
 ```
 
+```javascript
+const url = answers.URL;
+    console.log(url);
+    var qr_svg = qr.image(url);
+    var writeStream = fs.createWriteStream("qr_img.png");
+    qr_svg.pipe(writeStream);
+
+    fs.writeFile("URL.txt", url, (err) => {
+      if (err) throw err;
+      console.log("The file has been saved!");
+    });
+```
+
+
 --------------------------------------------------
-#### .createWriteStream( path, options)
+### .createWriteStream( path, options)
 Create a writable stream for writing data to a file.
 ```javascript
 fs.createWriteStream("file.jpg")
 ```
 
-[link_name](link here)
 
-![alt text](image path here)
+--------------------------------------------------
+### 
+```javascript
+
+```
+
+[//]: # ([link_name]&#40;link here&#41;)
+
+[//]: # (![alt text]&#40;image path here&#41;)
 
 

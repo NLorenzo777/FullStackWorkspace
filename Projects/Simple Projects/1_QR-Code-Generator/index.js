@@ -4,15 +4,37 @@
 3. Create a txt file to save the user input using the native fs node module.
 */
 
-import inquirer, { input } from 'inquirer';
+import inquirer from 'inquirer';
 import qr from 'qr-image';
 import fs from 'fs';
 
+var anErrorOccured;
+
+function createImage(answers) {
+    const url = answers.URL;
+    var qrObject = qr.image(url, {type: 'png'});
+    qrObject.pipe(fs.createWriteStream("resultQR.png"));
+    anErrorOccured = false;
+}
+
 inquirer.prompt([
-    {message: "URL to convert:"}
+    {message: "Type URL to convert:",
+        name: "URL"
+    },
 ])
 .then((answers) => {
-    const url = answers.URL;
-
+    createImage(answers);
 })
+.catch((error) => {
+    anErrorOccured = true;
+})
+.finally(
+    (anErrorOccured) => {
+        if (anErrorOccured) {
+            console.log("An error occured... Unsuccessfull conversion");
+        } else {
+            console.log("Process Complete!")
+        }
+    }
+);
 
