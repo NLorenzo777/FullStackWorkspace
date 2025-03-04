@@ -13,10 +13,59 @@ Which gives me the ability to open it anywhere on demand.
 
 
 1. Back End (Server Creation)
+   - [Node.js](#node-js) 
    - [Express.js](#express-js)
 
+## Front End
+### Form Creation in HTML
+```html
+<form action="endpoint" method="POST">
+   <button type="button" value="value1" name="key1"></button>
+   <button type="button" value="value2" name="key2"></button>
+   <button type="button" value="value3" name="key3"></button>
+</form>
+```
+- Sends in a key-value pair to the back end since it is a POST route.
 
-## Back end (Server Creation)
+## Back End (Server Creation)
+### Node JS
+#### Sample HTTP Request using Native Node.js
+```javascript
+import https from "https";
+
+app.get("/", (req, res) => {
+   const options = {
+      hostname: "www.url.com";
+      path: "/random";
+      method: "GET"
+   };
+   
+   const request = https.request(options, (response) => {
+      let data = "";
+      response.on("data", (chunk) => {
+         data += chunk;
+      });
+      
+      response.on("end", () => {
+         try {
+            const result = JSON.parse(data);
+            res.render("index.ejs", {activity: data});
+         } catch {
+            console.error("Failed to parse response:", error.message);
+            res.status(500).send("Failed to fetch activity. Please try again);
+         }
+      });
+   });
+   
+   request.on("error", (error) => {
+      console.error("Failed to parse response:", error.message);
+      res.status(500).send("Failed to fetch activity. Please try again);
+   });
+});
+
+
+```
+
 ### Express JS
 ```javascript
 import express from "express";
@@ -57,7 +106,6 @@ app.use(bodyParser.urlencoded({extended: true});
 ```
 To use a middleware, the `.use()` method of express is utilized.
 
-
 ## Templating
 
 ### Embedded JavaScript (EJS)
@@ -85,12 +133,12 @@ To use a middleware, the `.use()` method of express is utilized.
 - `<%- include("header.ejs") %>`: Insert another EJS file.
 
 ## Application Programming Interfaces (API)
-**Interface**:
+#### Interface:
 - A blueprint for a class that defines a contract of methods that a class must implement.
 - It specifies what a class should do but not how it should do it.
 - It helps achieve **abstraction** and **loose coupling** in software design.
 
-** Application Programming Interface (API) **
+#### Application Programming Interface (API)
 Set of protocols that allows different software applications to communicate
 with each other.
 1. **REST (Representational State Transfer) API**: Uses HTTP methods.
@@ -152,7 +200,28 @@ const jack = {
 A code from the JSON module which converts a JavaScript object into a string.
 JS Object to JSON format.
 
-#### `const data = JSON.parse(jsonData)`
+#### `const jsData = JSON.parse(jsonData)`
 A code from the JSON module which converts a JSON format into a JS Object.
 
+## API Request through Axios
+- Promise based.
+- Automatically converts received JSON data to JS object.
+- 
 
+Example HTTP request using axios.
+```javascript
+import axios from "axios";
+
+app.get("/", async (req, res) => {
+   try {
+      //await response before proceeding to render.
+      const response = await axios.get("www.api-url-here.com");
+      
+      //process the received data.
+      res.render("index.ejs", { activity: response.data });
+   } catch (error) {
+      //error processing here...
+   }
+});
+
+```
