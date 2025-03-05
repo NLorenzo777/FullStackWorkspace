@@ -206,7 +206,6 @@ A code from the JSON module which converts a JSON format into a JS Object.
 ## API Request through Axios
 - Promise based.
 - Automatically converts received JSON data to JS object.
-- 
 
 Example HTTP request using axios.
 ```javascript
@@ -223,5 +222,31 @@ app.get("/", async (req, res) => {
       //error processing here...
    }
 });
-
 ```
+
+## API Authentication
+### Level 0: No Authentication
+- Direct authentication
+- API requests are controlled through rate limits.
+- Checking of IP address how frequent it throws a request.
+
+### Level 1: Basic Authentication
+- *Username* and *Password*.
+- Passing a **Base64 Encoding** into the header of the `request`. 
+- The `username:password` is converted into Base64 and this converted format
+is pass along the request.
+- Can be easily decoded therefore has the least security.
+- Uses HTTPS encryption when being transported back and forth.
+
+### Level 2: API Key Authorization
+- A lot of public API uses API key as a way to allow requests.
+- an API key can be used to be associated for a certain credential or group.
+- Can be  used  to count the number of request associated to an API key.
+
+### Level 3: Token Based Authentication
+- A token is generated upon login using the username and password.
+- The token is used with the API. Therefore, the API does not use the username and password.
+It is the token that communicates with the API.
+- Normally `OAuth` and `OAuth2.0` as the standard.
+- Real life example is the **Google Sign-in**.]
+- The API provider generates a token that will act on your behalf.
