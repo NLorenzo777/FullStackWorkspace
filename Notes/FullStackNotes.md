@@ -77,6 +77,8 @@ const app = express();
 
 `res.sendFile(path)`: Sends a static file (html) as a response.
 
+`res.json(JS Object)`: Sends a JSON object as a response.
+
 ```javascript
 app.post("/submit", (req, res) => {
     const name = req.body["name"];
@@ -123,7 +125,6 @@ To use a middleware, the `.use()` method of express is utilized.
     </ul>
 </body
 ```
-
 #### EJS Tags:
 - `<%= variable %>`: Interpreted JavaScript with an output.
 - `<% console.log("hello") %>`: Executed JavaScript. For logic execution. Does not give output.
@@ -132,16 +133,19 @@ To use a middleware, the `.use()` method of express is utilized.
 - `<% #This is a comment %>`: Creating a comment.
 - `<%- include("header.ejs") %>`: Insert another EJS file.
 
+
+
 ## Application Programming Interfaces (API)
 #### Interface:
 - A blueprint for a class that defines a contract of methods that a class must implement.
 - It specifies what a class should do but not how it should do it.
 - It helps achieve **abstraction** and **loose coupling** in software design.
 
-#### Application Programming Interface (API)
+### Application Programming Interface (API)
 Set of protocols that allows different software applications to communicate
 with each other.
-1. **REST (Representational State Transfer) API**: Uses HTTP methods.
+1. **REST (Representational State Transfer) API**: Uses HTTP methods and has standard data format (JSON/XML).
+Clients and Servers are completely separated. Resource-based.
 2. **SOAP (Simple Object Access Protocol) API**: Uses XML for structured messaging.
 3. **GraphQL API**: Allows clients to request only the data needed.
 4. **Library API**: Provided by programming languages (e.g. Java's collection API).
@@ -165,14 +169,14 @@ Used for identifying a resource by some specific (unique) parameters.
 BaseURL/Endpoint/39430982
 ```
 
-## JavaScript Object Notation (JSON)
+### JavaScript Object Notation (JSON)
 - Usual structure response in web APIs.
 - Serialized into a string since it is being transferred within the internet.
 - It is a flat packaged file. Meaning, it is a string in format during transportation
 and later be converted in a usable format. Just like the delivering idea behind IKEA in which
 the item is in a part-by-part form and then assembled upon delivery.
 
-### JSON vs JavaScript
+#### JSON vs JavaScript
 ```json
 {
   "name": "Noel Lorenzo",
@@ -203,7 +207,7 @@ JS Object to JSON format.
 #### `const jsData = JSON.parse(jsonData)`
 A code from the JSON module which converts a JSON format into a JS Object.
 
-## API Request through Axios
+### API Request through Axios
 - Promise based.
 - Automatically converts received JSON data to JS object.
 
@@ -224,13 +228,13 @@ app.get("/", async (req, res) => {
 });
 ```
 
-## API Authentication
-### Level 0: No Authentication
+### API Authentication
+#### Level 0: No Authentication
 - Direct authentication
 - API requests are controlled through rate limits.
 - Checking of IP address how frequent it throws a request.
 
-### Level 1: Basic Authentication
+#### Level 1: Basic Authentication
 - *Username* and *Password*.
 - Passing a **Base64 Encoding** into the header of the `request`. 
 - The `username:password` is converted into Base64 and this converted format
@@ -238,15 +242,18 @@ is pass along the request.
 - Can be easily decoded therefore has the least security.
 - Uses HTTPS encryption when being transported back and forth.
 
-### Level 2: API Key Authorization
+#### Level 2: API Key Authorization
 - A lot of public API uses API key as a way to allow requests.
 - an API key can be used to be associated for a certain credential or group.
 - Can be  used  to count the number of request associated to an API key.
 
-### Level 3: Token Based Authentication
+#### Level 3: Token Based Authentication
 - A token is generated upon login using the username and password.
 - The token is used with the API. Therefore, the API does not use the username and password.
 It is the token that communicates with the API.
 - Normally `OAuth` and `OAuth2.0` as the standard.
 - Real life example is the **Google Sign-in**.]
 - The API provider generates a token that will act on your behalf.
+
+
+

@@ -166,3 +166,24 @@ myDisplay();
 
 - The two arguments `resolve` and `reject` are pre-defined by JavaScript.
 
+## Array Methods
+### .find(callback)
+Will loop through the array and returns the element according to a certain condition.
+```javascript
+let testArray = [0, 1, 2, 3, 4, 5];
+
+testArray.find((element) => element === 5);
+```
+```javascript
+jokes.find((joke) => joke.id === 5);
+```
+
+
+### .forEach(callback)
+```javascript
+let testArray = [0, 1, 2, 3, 4, 5];
+let sum = 0
+testArray.forEach((number) => {sum += number});
+```
+
+
