@@ -186,4 +186,10 @@ let sum = 0
 testArray.forEach((number) => {sum += number});
 ```
 
+### .findIndex(callback)
+Will return the index of a certain criteria in an array.
+```javascript
+const searchIndex = testArray.findIndex((element) => element.id === 123);
+
+```
 

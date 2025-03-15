@@ -38,14 +38,109 @@ app.get("/jokes", (req, res) => {
 });
 
 //4. POST a new joke
+app.post("/jokes", (req, res) => {
+  const newJoke = {
+    id: jokes.length + 1,
+    jokeText: req.body.text,
+    jokeType: req.body.type,
+  }
+  
+  try {
+    jokes.push(newJoke);
+    console.log(req.body);
+    console.log("Joke added successfully.");
+  } catch (err) {
+    console.log(err);
+  }
+
+  res.json(newJoke);
+  
+});
 
 //5. PUT a joke
+app.put("/jokes/:id", (req, res) => {
+  console.log("Received:" + req.params.id);
+  const requestId = parseInt(req.params.id) - 1;
+  if (requestId < jokes.length) {
+
+    //replace the file in the json.
+    const oldJoke = jokes[requestId];
+
+    //update the joke repository
+    jokes[requestId].jokeText = req.body.text;
+    jokes[requestId].jokeType = req.body.type;
+
+    res.json([
+      jokes[requestId],
+    ]);
+    return;
+
+  } else {
+    res.json({
+      error: "Invalid joke ID",
+    })
+    return;
+  }
+});
 
 //6. PATCH a joke
+app.patch("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const existingJoke = jokes.find((joke) => joke.id === id);
+  const updatedJoke = {
+    id: id,
+    jokeText: req.body.text || existingJoke.jokeText,
+    jokeType: req.body.type || existingJoke.jokeType,
+  };
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[searchIndex] = updatedJoke;
+  
+  res.json([
+    {
+      old: "version",
+      id: existingJoke.id,
+      jokeText: existingJoke.jokeText,
+      jokeType: existingJoke.jokeType,
+    },
+    {
+      new: "version",
+      id: updatedJoke.id,
+      jokeText: updatedJoke.jokeText,
+      jokeType: updatedJoke.jokeType,
+    }
+  ]);
+});
 
 //7. DELETE Specific joke
+app.delete("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = jokes.findIndex((joke) => joke.id === id);
+
+  if (index > -1) {
+    const updatedJokes = jokes.filter((joke) => joke.id !== id);
+    jokes = updatedJokes;
+    res.sendStatus(200);
+    return;
+  } else {
+    res
+    .status(404)
+    .json({ error: `Joke id: ${id} not found. Try a valid ID.`});
+    return;
+  }
+});
 
 //8. DELETE All jokes
+app.delete("/all", (req, res) => {
+  const userKey = req.query.key;
+
+  if (userKey === masterKey) {
+    jokes = [];
+    res.sendStatus(200);
+  } else {
+    res.status(400).json({error: "ACTION NOT AUTHORIZED!!!"});
+  }
+})
+
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
