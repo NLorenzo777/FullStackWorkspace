@@ -18,3 +18,9 @@ CREATE TABLE <table_name> (
     <field3> VARCHAR(45)
 );
 ```
+
+### Database Connection Setup
+#### JavaScript
+```
+import 
+```
